@@ -13,12 +13,14 @@ public class Minigame {
     @Column(name = "minigame_id")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "minigame_name", nullable = false)
-    private MinigameType minigameType;
-
     @Column(name = "minigame_description", nullable = false)
     private String description;
+
+    @Column(name = "question", nullable = false)
+    private String question;
+
+    @Column(name = "answer", nullable = false)
+    private String answer;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

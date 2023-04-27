@@ -2,6 +2,7 @@ package com.game.gamification_platform.controller;
 
 import com.game.gamification_platform.model.User;
 import com.game.gamification_platform.service.CourseService;
+import com.game.gamification_platform.service.MinigameService;
 import com.game.gamification_platform.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UserController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private MinigameService minigameService;
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("user/increment-experience-points/{username}/{experiencePoints}")
     public ResponseEntity<?> incrementExperiencePoints(@PathVariable String username, @PathVariable int experiencePoints) {
@@ -37,6 +41,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error incrementing experience points");
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("user/answer/{userAnswer}/{minigameId}")
+    public ResponseEntity<?> checkAnswer(@PathVariable String userAnswer, @PathVariable Long minigameId) {
+        try {
+            minigameService.checkAnswer(userAnswer, minigameId);
+            return ResponseEntity.ok("Right answer");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }    }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("update/updateProfilePic")
@@ -60,6 +74,12 @@ public class UserController {
     @GetMapping("user/courses/all")
     public ResponseEntity<?> findAllCourses() {
         return ResponseEntity.ok(courseService.findAllCourses());
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("user/minigames/{courseId}")
+    public ResponseEntity<?> findAllMinigamesForCourse(@PathVariable Long courseId) {
+        return ResponseEntity.ok(minigameService.findAllMinigamesForCourse(courseId));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

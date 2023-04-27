@@ -16,6 +16,7 @@ public class MinigameController {
     @Autowired
     private MinigameService minigameService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("create/{courseId}")
     public ResponseEntity<?> saveCourse(@RequestBody Minigame minigame, @PathVariable Long courseId) {
         return new ResponseEntity<>(minigameService.saveMinigame(minigame, courseId), HttpStatus.CREATED);
