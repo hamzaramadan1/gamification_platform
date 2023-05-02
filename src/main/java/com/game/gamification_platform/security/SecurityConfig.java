@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/admin/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/api/course/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/api/minigame/**").hasRole(Role.ADMIN.name())
+                .antMatchers("/api/userminigamescore/**").hasRole(Role.USER.name())
                 .antMatchers("/image/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/image").hasRole(Role.ADMIN.name())
                 .anyRequest().authenticated();

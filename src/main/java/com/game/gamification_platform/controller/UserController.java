@@ -47,10 +47,11 @@ public class UserController {
     public ResponseEntity<?> checkAnswer(@PathVariable String userAnswer, @PathVariable Long minigameId) {
         try {
             minigameService.checkAnswer(userAnswer, minigameId);
-            return ResponseEntity.ok("Right answer");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }    }
+            return ResponseEntity.ok("{\"result\": \"Right answer\"}");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+        }
+    }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("update/updateProfilePic")
