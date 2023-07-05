@@ -10,15 +10,15 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "minigames")
-@ToString(exclude = {"questions"})
-public class Minigame {
+@Table(name = "memoryGames")
+@ToString(exclude = {"cards"})
+public class MemoryGame {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "minigame_id")
+    @Column(name = "memoryGameId")
     private Long id;
 
-    @Column(name = "minigame_description")
+    @Column(name = "memoryGameDescription")
     private String description;
 
     @ManyToOne
@@ -29,8 +29,8 @@ public class Minigame {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "minigame", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = {"minigame"}, allowSetters = true)
-    private List<Question> questions;
+    @OneToMany(mappedBy = "memoryGame", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = {"memoryGame"}, allowSetters = true)
+    private List<Card> cards;
 
 }

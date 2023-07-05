@@ -9,7 +9,17 @@ public interface MinigameService {
 
     List<Minigame> findAllMinigamesForCourse(Long courseId);
 
-    void checkAnswer(String userAnswer, Long minigameId);
+    //void checkAnswer(String userAnswer, Long minigameId);
 
     Minigame saveMinigame(Minigame minigame, Long courseId);
+
+    List<Minigame> findAllMinigamesForUser();
+
+    List<Minigame> findAllMinigames();
+
+    int findAllMinigamesForUserCount();
+
+    int findAllMinigamesCount();
+
+    void deleteMinigame(Long id);
 }

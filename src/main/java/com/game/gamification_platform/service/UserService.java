@@ -19,6 +19,10 @@ public interface UserService {
 
     Optional<User> findByUsername(String username);
 
+    List<User> getFirstThreeUsersWithHighestExperiencePoints();
+
+    List<User> getUsersWithHighestExperiencePoints();
+
     void changeRole(Role newRole, Long id);
 
     @Transactional

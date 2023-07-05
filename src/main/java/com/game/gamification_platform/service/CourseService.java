@@ -16,4 +16,8 @@ public interface CourseService {
     List<Course> findAllCourses();
 
     int findAllCoursesForUserCount();
+
+    int findAllCoursesCount();
+
+    void deleteCourse(Long id);
 }

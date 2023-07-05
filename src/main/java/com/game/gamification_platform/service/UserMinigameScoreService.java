@@ -6,4 +6,8 @@ import java.util.Optional;
 
 public interface UserMinigameScoreService {
     Optional<UserMinigameScore> findScoreByMinigameId(Long minigameId);
+
+    UserMinigameScore updateScoreByMinigameId(Long minigameId, int updatedScore);
+
+    int getMinigameCount(Long minigameId);
 }

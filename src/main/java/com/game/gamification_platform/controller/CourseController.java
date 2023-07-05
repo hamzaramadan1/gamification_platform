@@ -40,9 +40,9 @@ public class CourseController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("create")
     public ResponseEntity<?> saveCourse(@RequestParam("courseName") String courseName,
-                                             @RequestParam("courseDescription") String courseDescription,
-                                             @RequestParam("courseLink") String courseLink,
-                                             @RequestParam("file") MultipartFile file) throws IOException {
+                                        @RequestParam("courseDescription") String courseDescription,
+                                        @RequestParam("courseLink") String courseLink,
+                                        @RequestParam("file") MultipartFile file) throws IOException {
         return new ResponseEntity<>(courseService.saveCourse(courseName, courseDescription, courseLink, file), HttpStatus.CREATED);
     }
 
@@ -52,6 +52,14 @@ public class CourseController {
                                             @RequestParam("courseDescription") String courseDescription,
                                             @RequestParam("courseLink") String courseLink){
         return new ResponseEntity<>(courseService.saveCourseTest(courseName, courseDescription, courseLink), HttpStatus.CREATED);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
+        courseService.deleteCourse(id);
+
+        return ResponseEntity.ok(true);
     }
 
 }

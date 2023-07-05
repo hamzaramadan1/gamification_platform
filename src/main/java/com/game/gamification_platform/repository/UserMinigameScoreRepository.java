@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface UserMinigameScoreRepository extends JpaRepository<UserMinigameScore, Long> {
     UserMinigameScore findByUserAndMinigame(User user, Minigame minigame);
     Optional<UserMinigameScore> findByUserAndMinigameId(User scoreUser, Long minigameId);
+    int countByMinigameId(Long minigameId);
 }

@@ -1,10 +1,7 @@
 package com.game.gamification_platform.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "users")
+@ToString(exclude = {"minigames", "questions", "courses", "memoryGames", "cards", "puzzleGames", "wordSearches"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,13 +41,33 @@ public class User {
     @Column(name = "userImageFile", length = 1000)
     private byte[] userImageFile;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     @JsonIgnore
     private List<Course> courses;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     @JsonIgnore
     private List<Minigame> minigames;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<MemoryGame> memoryGames;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<Card> cards;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<PuzzleGame> puzzleGames;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<WordSearch> wordSearches;
 
     @Column(name = "locked", nullable = false)
     private boolean locked;
@@ -57,6 +75,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "grade", nullable = false)
+    private Grade grade;
 
     @Column(name = "experience_points", nullable = false)
     private int experiencePoints = 0;

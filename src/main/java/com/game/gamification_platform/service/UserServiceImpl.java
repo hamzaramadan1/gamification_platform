@@ -1,5 +1,6 @@
 package com.game.gamification_platform.service;
 
+import com.game.gamification_platform.model.Grade;
 import com.game.gamification_platform.model.Role;
 import com.game.gamification_platform.model.User;
 import com.game.gamification_platform.repository.UserRepository;
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
             else {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 user.setRole(Role.USER);
+                user.setGrade(Grade.Débutant);
             }
         }
         return userRepository.save(user);
@@ -59,6 +61,9 @@ public class UserServiceImpl implements UserService {
         String newFileName = UUID.randomUUID().toString() + "." + fileExtension;
         String uploadDir = "C:\\Users\\hramadan\\angular-gamification_platform\\src\\assets\\user_images";
         Path uploadPath = Paths.get(uploadDir);
+        if (!userImageFile.getContentType().startsWith("image/")) {
+            throw new IllegalArgumentException("Only image files are allowed");
+        }
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
@@ -116,6 +121,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getFirstThreeUsersWithHighestExperiencePoints() {
+        List<User> allUsers = userRepository.findUsersWithHighestExperiencePoints();
+        if (allUsers.size() > 3) {
+            return allUsers.subList(0, 3);
+        } else {
+            return allUsers;
+        }
+    }
+
+    @Override
+    public List<User> getUsersWithHighestExperiencePoints() {
+        List<User> allUsers = userRepository.findUsersWithHighestExperiencePoints();
+        return allUsers;
+    }
+
+    @Override
     @Transactional
     public void changeRole(Role newRole, Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -127,6 +148,22 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setRole(newRole);
+        if (newRole == Role.ADMIN) {
+            user.setGrade(Grade.Professeur);
+        } else if (newRole == Role.USER) {
+            if (user.getUserLevel() >= 1 && user.getUserLevel() < 25) {
+                user.setGrade(Grade.Débutant);
+            }
+            else if (user.getUserLevel() >= 25 && user.getUserLevel() < 50) {
+                user.setGrade(Grade.Intermédiaire);
+            }
+            else if (user.getUserLevel() >= 50 && user.getUserLevel() < 75) {
+                user.setGrade(Grade.Avancé);
+            }
+            else if (user.getUserLevel() >= 75) {
+                user.setGrade(Grade.Expert);
+            }
+        }
         userRepository.save(user);
     }
 
@@ -192,12 +229,20 @@ public class UserServiceImpl implements UserService {
         } catch (NotFoundException e) {
             throw new RuntimeException(e);
         }
-        for (int i = 1; i < 1001; i++) {
-            if (user.getExperiencePoints() >= i*1000) {
-                user.setUserLevel(i+1);
+        int requiredPoints = ((user.getUserLevel() * 1000) + (user.getUserLevel() * 100 * user.getUserLevel()));
+        if (user.getExperiencePoints() >= requiredPoints) {
+            user.setUserLevel(user.getUserLevel()+1);
+            if (user.getUserLevel() >= 1 && user.getUserLevel() < 25) {
+                user.setGrade(Grade.Débutant);
             }
-            else {
-                break;
+            else if (user.getUserLevel() >= 25 && user.getUserLevel() < 50) {
+                user.setGrade(Grade.Intermédiaire);
+            }
+            else if (user.getUserLevel() >= 50 && user.getUserLevel() < 75) {
+                user.setGrade(Grade.Avancé);
+            }
+            else if (user.getUserLevel() >= 75) {
+                user.setGrade(Grade.Expert);
             }
         }
     }

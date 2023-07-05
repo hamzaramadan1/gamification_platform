@@ -6,6 +6,7 @@ import com.game.gamification_platform.repository.CourseRepository;
 import com.game.gamification_platform.repository.StorageRepository;
 import com.game.gamification_platform.repository.UserRepository;
 import com.game.gamification_platform.utils.ImageUtils;
+import javassist.NotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,9 @@ public class CourseServiceImpl implements CourseService {
         String newFileName = UUID.randomUUID().toString() + "." + fileExtension;
         String uploadDir = "C:\\Users\\hramadan\\angular-gamification_platform\\src\\assets\\course_images";
         Path uploadPath = Paths.get(uploadDir);
+        if (!file.getContentType().startsWith("image/")) {
+            throw new IllegalArgumentException("Only image files are allowed");
+        }
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
@@ -100,7 +104,24 @@ public class CourseServiceImpl implements CourseService {
         User user = optionalUser.orElse(null);
         List<Course> courses =  courseRepository.findByUser(user);
         return courses.size();
+    }
 
+    @Override
+    public int findAllCoursesCount() {
+        List<Course> courses =  courseRepository.findAll();
+        return courses.size();
+    }
+
+    @Override
+    public void deleteCourse(Long id) {
+        Optional<Course> optionalCourse = courseRepository.findById(id);
+        Course course = null;
+        try {
+            course = optionalCourse.orElseThrow(() -> new NotFoundException("Course not found"));
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        courseRepository.delete(course);
     }
 
 }

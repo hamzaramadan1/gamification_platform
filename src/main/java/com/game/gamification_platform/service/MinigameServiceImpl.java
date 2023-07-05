@@ -1,20 +1,17 @@
 package com.game.gamification_platform.service;
 
-import com.game.gamification_platform.model.Course;
-import com.game.gamification_platform.model.Minigame;
-import com.game.gamification_platform.model.User;
-import com.game.gamification_platform.model.UserMinigameScore;
+import com.game.gamification_platform.model.*;
 import com.game.gamification_platform.repository.CourseRepository;
 import com.game.gamification_platform.repository.MinigameRepository;
 import com.game.gamification_platform.repository.UserMinigameScoreRepository;
 import com.game.gamification_platform.repository.UserRepository;
+import javassist.NotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class MinigameServiceImpl implements MinigameService {
 
@@ -38,7 +35,7 @@ public class MinigameServiceImpl implements MinigameService {
         return minigameRepository.findByCourse(course);
     }
 
-    @Override
+    /*@Override
     public void checkAnswer(String userAnswer, Long minigameId) throws IllegalArgumentException {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
@@ -63,7 +60,9 @@ public class MinigameServiceImpl implements MinigameService {
         else {
             throw new IllegalArgumentException("Wrong answer");
         }
+
     }
+    */
 
     @Override
     public Minigame saveMinigame(Minigame minigame, Long courseId) {
@@ -71,8 +70,54 @@ public class MinigameServiceImpl implements MinigameService {
         String username = userDetails.getUsername();
         Optional<User> optionalUser = userRepository.findByUsername(username);
         User user = optionalUser.orElse(null);
+        for (Question question : minigame.getQuestions()) {
+            question.setMinigame(minigame);
+            question.setUser(user);
+        }
         minigame.setUser(user);
         minigame.setCourse(courseRepository.getById(courseId));
         return minigameRepository.save(minigame);
+    }
+
+    @Override
+    public List<Minigame> findAllMinigamesForUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        User user = optionalUser.orElse(null);
+        return minigameRepository.findByUser(user);
+    }
+
+    @Override
+    public List<Minigame> findAllMinigames() {
+        return minigameRepository.findAll();
+    }
+
+    @Override
+    public int findAllMinigamesForUserCount() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        User user = optionalUser.orElse(null);
+        List<Minigame> minigames =  minigameRepository.findByUser(user);
+        return minigames.size();
+    }
+
+    @Override
+    public int findAllMinigamesCount() {
+        List<Minigame> minigames =  minigameRepository.findAll();
+        return minigames.size();
+    }
+
+    @Override
+    public void deleteMinigame(Long id) {
+        Optional<Minigame> optionalMinigame = minigameRepository.findById(id);
+        Minigame minigame = null;
+        try {
+            minigame = optionalMinigame.orElseThrow(() -> new NotFoundException("Minigame not found"));
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        minigameRepository.delete(minigame);
     }
 }

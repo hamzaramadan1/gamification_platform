@@ -1,9 +1,7 @@
 package com.game.gamification_platform.controller;
 
 import com.game.gamification_platform.model.User;
-import com.game.gamification_platform.service.CourseService;
-import com.game.gamification_platform.service.MinigameService;
-import com.game.gamification_platform.service.UserService;
+import com.game.gamification_platform.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/user")
@@ -31,8 +30,14 @@ public class UserController {
     @Autowired
     private MinigameService minigameService;
 
+    @Autowired
+    private MemoryGameService memoryGameService;
+
+    @Autowired
+    private PuzzleGameService puzzleGameService;
+
     @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping("user/increment-experience-points/{username}/{experiencePoints}")
+        @PutMapping("user/increment-experience-points/{username}/{experiencePoints}")
     public ResponseEntity<?> incrementExperiencePoints(@PathVariable String username, @PathVariable int experiencePoints) {
         try {
             userService.incrementExperiencePoints(username, experiencePoints);
@@ -42,7 +47,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    /*@CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("user/answer/{userAnswer}/{minigameId}")
     public ResponseEntity<?> checkAnswer(@PathVariable String userAnswer, @PathVariable Long minigameId) {
         try {
@@ -52,6 +57,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
     }
+    */
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("update/updateProfilePic")
@@ -72,15 +78,45 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("user/getFirstThreeUsersWithHighestExperiencePoints")
+    public List<User> getFirstThreeUsersWithHighestExperiencePoints() {
+        return userService.getFirstThreeUsersWithHighestExperiencePoints();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("user/getUsersWithHighestExperiencePoints")
+    public List<User> getUsersWithHighestExperiencePoints() {
+        return userService.getUsersWithHighestExperiencePoints();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("user/courses/all")
     public ResponseEntity<?> findAllCourses() {
         return ResponseEntity.ok(courseService.findAllCourses());
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("user/courses/allCount")
+    public ResponseEntity<?> findAllCoursesCount() {
+        return ResponseEntity.ok(courseService.findAllCoursesCount());
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("user/minigames/{courseId}")
     public ResponseEntity<?> findAllMinigamesForCourse(@PathVariable Long courseId) {
         return ResponseEntity.ok(minigameService.findAllMinigamesForCourse(courseId));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("user/memoryGames/{courseId}")
+    public ResponseEntity<?> findAllMemoryGamesForCourse(@PathVariable Long courseId) {
+        return ResponseEntity.ok(memoryGameService.findAllMemoryGamesForCourse(courseId));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("user/puzzleGames/{courseId}")
+    public ResponseEntity<?> findAllPuzzleGamesForCourse(@PathVariable Long courseId) {
+        return ResponseEntity.ok(puzzleGameService.findAllPuzzleGamesForCourse(courseId));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

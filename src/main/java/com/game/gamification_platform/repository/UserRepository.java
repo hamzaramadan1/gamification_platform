@@ -15,6 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByRole(Role role);
 
+    @Query("SELECT u FROM User u WHERE u.role = 'USER' ORDER BY u.experiencePoints DESC")
+    List<User> findUsersWithHighestExperiencePoints();
+
     @Modifying
     @Query("update User set role = :role where username = :username")
     void updateUserRole(@Param("username") String email, @Param("role") Role role);

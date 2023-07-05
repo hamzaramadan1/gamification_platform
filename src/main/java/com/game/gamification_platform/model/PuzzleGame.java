@@ -1,6 +1,5 @@
 package com.game.gamification_platform.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
@@ -10,15 +9,15 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "minigames")
-@ToString(exclude = {"questions"})
-public class Minigame {
+@Table(name = "puzzleGames")
+@ToString(exclude = {"wordSearches"})
+public class PuzzleGame {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "minigame_id")
+    @Column(name = "puzzleGameId")
     private Long id;
 
-    @Column(name = "minigame_description")
+    @Column(name = "puzzleGameDescription")
     private String description;
 
     @ManyToOne
@@ -29,8 +28,7 @@ public class Minigame {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "minigame", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = {"minigame"}, allowSetters = true)
-    private List<Question> questions;
-
+    @OneToMany(mappedBy = "puzzleGame", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = {"puzzleGame"}, allowSetters = true)
+    private List<WordSearch> wordSearches;
 }

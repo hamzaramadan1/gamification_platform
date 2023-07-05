@@ -1,10 +1,8 @@
 package com.game.gamification_platform.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -16,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "courses")
+@ToString(exclude = {"user", "minigames", "memoryGames", "puzzleGames"})
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,7 +44,15 @@ public class Course {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", orphanRemoval = true)
     @JsonIgnore
     private List<Minigame> minigames;
+
+    @OneToMany(mappedBy = "course", orphanRemoval = true)
+    @JsonIgnore
+    private List<MemoryGame> memoryGames;
+
+    @OneToMany(mappedBy = "course", orphanRemoval = true)
+    @JsonIgnore
+    private List<PuzzleGame> puzzleGames;
 }

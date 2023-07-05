@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "userminigamescores")
-public class UserMinigameScore {
+@Table(name = "userMemoryGameScores")
+public class UserMemoryGameScore {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class UserMinigameScore {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "minigame_id")
-    private Minigame minigame;
+    @JoinColumn(name = "memoryGameId")
+    private MemoryGame memoryGame;
 
     @JoinColumn(name = "score")
     private int score;
