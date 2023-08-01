@@ -25,19 +25,19 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("allForUser")
     public ResponseEntity<?> findAllCoursesForUser() {
         return ResponseEntity.ok(courseService.findAllCoursesForUser());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("all/count")
     public ResponseEntity<?> findAllCoursesForUserCount() {
         return ResponseEntity.ok(courseService.findAllCoursesForUserCount());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping("create")
     public ResponseEntity<?> saveCourse(@RequestParam("courseName") String courseName,
                                         @RequestParam("courseDescription") String courseDescription,
@@ -46,7 +46,7 @@ public class CourseController {
         return new ResponseEntity<>(courseService.saveCourse(courseName, courseDescription, courseLink, file), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping(value = "createTest")
     public ResponseEntity<?> saveCourseTest(@RequestParam("courseName") String courseName,
                                             @RequestParam("courseDescription") String courseDescription,
@@ -54,7 +54,7 @@ public class CourseController {
         return new ResponseEntity<>(courseService.saveCourseTest(courseName, courseDescription, courseLink), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);

@@ -24,7 +24,7 @@ public class AuthenticationController {
     @Autowired
     private JwtRefreshTokenService jwtRefreshTokenService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping("sign-up")
     public ResponseEntity<?> signUp(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()).isPresent()) {
@@ -33,7 +33,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping("sign-in")
     public ResponseEntity<?> signIn(@RequestBody User user) {
         User userPrincipal = authenticationService.signInAndReturnJWT(user);
@@ -43,7 +43,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(userPrincipal,HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping("refresh-token")
     public ResponseEntity<?> refreshToken(@RequestParam String token) {
         return ResponseEntity.ok(jwtRefreshTokenService.generateAccessTokenFromRefreshToken(token));

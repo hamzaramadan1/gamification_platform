@@ -14,13 +14,13 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping("create/{memoryGameId}")
     public ResponseEntity<?> saveCard(@RequestBody Card card, @PathVariable Long memoryGameId) {
         return new ResponseEntity<>(cardService.saveCard(card, memoryGameId), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("{memoryGameId}")
     public ResponseEntity<?> findByMemoryGameId(@PathVariable Long memoryGameId) {
         return ResponseEntity.ok(cardService.findByMemoryGameId(memoryGameId));

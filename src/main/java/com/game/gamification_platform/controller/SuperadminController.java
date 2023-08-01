@@ -13,13 +13,13 @@ public class SuperadminController {
     @Autowired
     private UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("all")
     public ResponseEntity<?> findAllUsers() {
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PutMapping("user/{id}/change/{role}")
     public ResponseEntity<?> changeRole(@PathVariable Long id,
                                         @PathVariable Role role) {
@@ -28,7 +28,7 @@ public class SuperadminController {
         return ResponseEntity.ok(true);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PostMapping("lock/{id}")
     public ResponseEntity<?> lockUser(@PathVariable Long id) {
         userService.lockUser(id);
@@ -36,7 +36,7 @@ public class SuperadminController {
         return ResponseEntity.ok(true);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PostMapping("unlock/{id}")
     public ResponseEntity<?> unlockUser(@PathVariable Long id) {
         userService.unlockUser(id);
@@ -44,7 +44,7 @@ public class SuperadminController {
         return ResponseEntity.ok(true);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @DeleteMapping("user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

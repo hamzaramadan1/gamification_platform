@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/userPuzzleGameScore/**").hasAnyRole(Role.ADMIN.name(), Role.USER.name(), Role.SUPERADMIN.name())
                 .antMatchers("/image/**").hasAnyRole(Role.ADMIN.name(), Role.SUPERADMIN.name())
                 .antMatchers("/image").hasAnyRole(Role.ADMIN.name(), Role.SUPERADMIN.name())
-                .anyRequest().authenticated();
+                .antMatchers("/api/**").authenticated();
 
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

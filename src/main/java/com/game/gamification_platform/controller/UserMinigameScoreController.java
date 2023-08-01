@@ -19,7 +19,7 @@ public class UserMinigameScoreController {
     @Autowired
     private UserMinigameScoreService userMinigameScoreService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("{minigameId}")
     public ResponseEntity<?> findScoreByMinigameId(@PathVariable Long minigameId) {
         Optional<UserMinigameScore> score = userMinigameScoreService.findScoreByMinigameId(minigameId);
@@ -31,13 +31,13 @@ public class UserMinigameScoreController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PutMapping("{minigameId}/{updatedScore}")
     public ResponseEntity<?> updateScoreByMinigameId(@PathVariable Long minigameId, @PathVariable int updatedScore) {
         return new ResponseEntity<>(userMinigameScoreService.updateScoreByMinigameId(minigameId, updatedScore), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("/{minigameId}/count")
     public ResponseEntity<Integer> getMinigameCount(@PathVariable Long minigameId) {
         int count = userMinigameScoreService.getMinigameCount(minigameId);

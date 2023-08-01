@@ -14,37 +14,37 @@ public class MemoryGameController {
     @Autowired
     private MemoryGameService memoryGameService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @PostMapping("create/{courseId}")
     public ResponseEntity<?> saveMemoryGame(@RequestBody MemoryGame memoryGame, @PathVariable Long courseId) {
         return new ResponseEntity<>(memoryGameService.saveMemoryGame(memoryGame, courseId), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("allForUser")
     public ResponseEntity<?> findAllMemoryGamesForUser() {
         return ResponseEntity.ok(memoryGameService.findAllMemoryGamesForUser());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("all")
     public ResponseEntity<?> findAllMemoryGames() {
         return ResponseEntity.ok(memoryGameService.findAllMemoryGames());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("all/count")
     public ResponseEntity<?> findAllMemoryGamesForUserCount() {
         return ResponseEntity.ok(memoryGameService.findAllMemoryGamesForUserCount());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @GetMapping("all/allCount")
     public ResponseEntity<?> findAllMemoryGamesCount() {
         return ResponseEntity.ok(memoryGameService.findAllMemoryGamesCount());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036/")
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deleteMemoryGame(@PathVariable Long id) {
         memoryGameService.deleteMemoryGame(id);

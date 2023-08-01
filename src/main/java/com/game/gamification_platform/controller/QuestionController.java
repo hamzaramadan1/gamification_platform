@@ -15,13 +15,13 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PostMapping("create/{minigameId}")
     public ResponseEntity<?> saveQuestion(@RequestBody Question question, @PathVariable Long minigameId) {
         return new ResponseEntity<>(questionService.saveQuestion(question, minigameId), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("{minigameId}")
     public ResponseEntity<?> findByMinigameId(@PathVariable Long minigameId) {
         return ResponseEntity.ok(questionService.findByMinigameId(minigameId));

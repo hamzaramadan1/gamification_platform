@@ -18,7 +18,7 @@ public class UserMemoryGameScoreController {
     @Autowired
     private UserMemoryGameScoreService userMemoryGameScoreService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("{memoryGameId}")
     public ResponseEntity<?> findScoreByMemoryGameId(@PathVariable Long memoryGameId) {
         Optional<UserMemoryGameScore> score = userMemoryGameScoreService.findScoreByMemoryGameId(memoryGameId);
@@ -30,13 +30,13 @@ public class UserMemoryGameScoreController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PutMapping("{memoryGameId}/{updatedScore}")
     public ResponseEntity<?> updateScoreByMemoryGameId(@PathVariable Long memoryGameId, @PathVariable int updatedScore) {
         return new ResponseEntity<>(userMemoryGameScoreService.updateScoreByMemoryGameId(memoryGameId, updatedScore), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("/{memoryGameId}/count")
     public ResponseEntity<Integer> getMemoryGameCount(@PathVariable Long memoryGameId) {
         int count = userMemoryGameScoreService.getMemoryGameCount(memoryGameId);

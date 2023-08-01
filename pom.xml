@@ -11,6 +11,7 @@
     <groupId>com.game</groupId>
     <artifactId>gamification_platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>gamification_platform</name>
     <description>gamification_platform</description>
     <properties>

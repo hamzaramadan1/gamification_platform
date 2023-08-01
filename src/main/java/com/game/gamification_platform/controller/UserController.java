@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     private PuzzleGameService puzzleGameService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
         @PutMapping("user/increment-experience-points/{username}/{experiencePoints}")
     public ResponseEntity<?> incrementExperiencePoints(@PathVariable String username, @PathVariable int experiencePoints) {
         try {
@@ -47,7 +47,7 @@ public class UserController {
         }
     }
 
-    /*@CrossOrigin(origins = "http://localhost:4200")
+    /*@CrossOrigin(origins = "http://192.168.1.64:8036")
     @PostMapping("user/answer/{userAnswer}/{minigameId}")
     public ResponseEntity<?> checkAnswer(@PathVariable String userAnswer, @PathVariable Long minigameId) {
         try {
@@ -59,13 +59,13 @@ public class UserController {
     }
     */
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PutMapping("update/updateProfilePic")
     public ResponseEntity<?> updateProfilePic(@RequestParam("userImageFile") MultipartFile userImageFile) throws IOException {
         return new ResponseEntity<>(userService.updateProfilePic(userImageFile), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PutMapping("update/{currentPassword}")
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String currentPassword) {
         try {
@@ -77,49 +77,49 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/getFirstThreeUsersWithHighestExperiencePoints")
     public List<User> getFirstThreeUsersWithHighestExperiencePoints() {
         return userService.getFirstThreeUsersWithHighestExperiencePoints();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/getUsersWithHighestExperiencePoints")
     public List<User> getUsersWithHighestExperiencePoints() {
         return userService.getUsersWithHighestExperiencePoints();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/courses/all")
     public ResponseEntity<?> findAllCourses() {
         return ResponseEntity.ok(courseService.findAllCourses());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/courses/allCount")
     public ResponseEntity<?> findAllCoursesCount() {
         return ResponseEntity.ok(courseService.findAllCoursesCount());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/minigames/{courseId}")
     public ResponseEntity<?> findAllMinigamesForCourse(@PathVariable Long courseId) {
         return ResponseEntity.ok(minigameService.findAllMinigamesForCourse(courseId));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/memoryGames/{courseId}")
     public ResponseEntity<?> findAllMemoryGamesForCourse(@PathVariable Long courseId) {
         return ResponseEntity.ok(memoryGameService.findAllMemoryGamesForCourse(courseId));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("user/puzzleGames/{courseId}")
     public ResponseEntity<?> findAllPuzzleGamesForCourse(@PathVariable Long courseId) {
         return ResponseEntity.ok(puzzleGameService.findAllPuzzleGamesForCourse(courseId));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("admin/allUsers")
     public ResponseEntity<?> findAllUsersUsersCount() {
         return ResponseEntity.ok(userService.findAllUsersUsersCount());

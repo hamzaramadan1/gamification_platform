@@ -15,7 +15,7 @@ public class UserPuzzleGameScoreController {
     @Autowired
     private UserPuzzleGameScoreService userPuzzleGameScoreService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("{puzzleGameId}")
     public ResponseEntity<?> findScoreByPuzzleGameId(@PathVariable Long puzzleGameId) {
         Optional<UserPuzzleGameScore> score = userPuzzleGameScoreService.findScoreByPuzzleGameId(puzzleGameId);
@@ -27,13 +27,13 @@ public class UserPuzzleGameScoreController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PutMapping("{puzzleGameId}/{updatedScore}")
     public ResponseEntity<?> updateScoreByPuzzleGameId(@PathVariable Long puzzleGameId, @PathVariable int updatedScore) {
         return new ResponseEntity<>(userPuzzleGameScoreService.updateScoreByPuzzleGameId(puzzleGameId, updatedScore), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("/{puzzleGameId}/count")
     public ResponseEntity<Integer> getPuzzleGameCount(@PathVariable Long puzzleGameId) {
         int count = userPuzzleGameScoreService.getPuzzleGameCount(puzzleGameId);

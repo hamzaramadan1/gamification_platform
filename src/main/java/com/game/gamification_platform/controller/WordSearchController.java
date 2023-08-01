@@ -15,13 +15,13 @@ public class WordSearchController {
     @Autowired
     private WordSearchService wordSearchService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @PostMapping("create/{memoryGameId}")
     public ResponseEntity<?> saveWordSearch(@RequestBody WordSearch wordSearch, @PathVariable Long puzzleGameId) {
         return new ResponseEntity<>(wordSearchService.saveWordSearch(wordSearch, puzzleGameId), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.1.64:8036")
     @GetMapping("{puzzleGameId}")
     public ResponseEntity<?> findByPuzzleGameId(@PathVariable Long puzzleGameId) {
         return ResponseEntity.ok(wordSearchService.findByPuzzleGameId(puzzleGameId));
